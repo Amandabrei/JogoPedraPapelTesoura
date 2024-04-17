@@ -1,0 +1,38 @@
+body{
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+img{
+    border: 1px solid gainsboro;
+    cursor: pointer;
+}
+
+h1{
+    font-style: oblique;
+}
+
+#botao{
+    background: rgb(75, 137, 189);
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+
+}
+
+#botao:hover{
+    background: rgb(144, 196, 238);
+    color: black;
+}
+
+#area-resultado{
+    display: none;
+}
+
+#frase{
+    color: blue;
+}

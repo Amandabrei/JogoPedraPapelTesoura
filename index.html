@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Pedra-Papel-Tesoura</title>
+</head>
+<body>
+    <h1>Jogo: Pedra, Papel e Tesoura</h1>
+    <h2 id="frase">Escolha uma opção para começar o jogo:</h2>
+    <div id="area-escolha">
+        <img id="pedra" onclick="select(0)" src="img/PedraE.png">
+        <img id="papel" onclick="select(1)" src="img/PapelE.png">
+        <img id="tesoura" onclick="select(2)" src="img/TesouraE.png">
+    </div>
+    <div id="area-resultado">
+        <img id="jogador" src="img/PedraE.png">
+        <img id="pc" src="img/PapelD.png">
+        <br>
+        <button id="botao" onclick="location.reload(true)">Recomeçar</button>
+    </div>
+
+    <script>
+        //elementos básicos do projetos, renomeando eles pra facilitar
+        var frase = document.getElementById("frase");
+        var jogador = document.getElementById("jogador");
+        var pc = document.getElementById("pc");
+        var botao = document.getElementById("botao");
+        var areaEscolha = document.getElementById("area-escolha");
+        var areaResultado = document.getElementById("area-resultado");
+
+        //imagens usadas
+        var imagens_jogador = ["img/PedraE.png" , "img/PapelE.png" , "img/TesouraE.png"];
+        var imagens_pc = ["img/PedraD.png" , "img/PapelD.png" , "img/TesouraD.png"];
+
+        //começo do jogo
+        var index = 0;
+
+        //função para efeito das imagens
+        function efeitoImagem(){
+            jogador.src = imagens_jogador[index];
+            pc.src = imagens_pc[index];
+
+            index++;
+            if (index === 3){
+                index = 0;
+            }
+        }
+
+        //efeito de escolha
+        var efeito = setInterval(efeitoImagem, 100);
+
+        //funcao principal de selecao
+        function select (escolhaJogador){
+            //esconder area de opçoes
+            areaEscolha.style.display = 'none';
+
+            //mostrar a area de animação
+            areaResultado.style.display = 'block';
+
+            //contador de quem venceu regrassivo
+            frase.textContent = '3';
+
+            //ativar cronometro
+            var tempo = setInterval(() => {
+                var cronometro = parseInt(frase.textContent);
+                cronometro --;
+                frase.textContent = cronometro;
+
+                //parar quando chegar em zero
+                if (cronometro == 0){
+                    clearInterval(tempo);
+                    clearInterval(efeito);
+                }
+
+            }, 1000);    
+
+            //regras do jogo
+            setTimeout(() => {
+                //escolha do PC
+                var escolhaPc = Math.floor (Math.random() *3);
+                console.log ('Escolha do PC: ' + escolhaPc);
+                pc.src = imagens_pc[escolhaPc];
+
+                //escolha do jogador
+                
+                jogador.src = imagens_jogador[escolhaJogador];
+
+                //verificar se foi empate
+                if(escolhaJogador === escolhaPc){
+                    frase.textContent = 'Empatou!';
+                    botao.style.display = 'block';
+                    return false;
+
+                }
+
+                //veriicar vitória pc
+                switch(escolhaJogador){
+                    case 0: //escolheu pedra
+                    escolhaPc === 2 ? frase.textContent = "Jogador venceu!!" : frase.textContent = "Pc venceu!!";
+                    botao.style.display = 'block';
+                    break;
+                    case 1: //escolheu papel
+                    escolhaPc === 0 ? frase.textContent = "Jogador venceu!!" : frase.textContent = "Pc venceu!!";
+                    botao.style.display = 'block';
+                    break;
+                    case 2: //escolheu tesoura
+                    escolhaPc === 1 ? frase.textContent = "Jogador venceu!!" : frase.textContent = "Pc venceu!!";
+                    botao.style.display = 'block';
+                    break;
+
+                    default:
+                        alert('Escolha inválida');
+                }
+
+            }, 3000);
+        }
+
+
+        efeitoImagem();
+    </script>
+    
+</body>
+</html>
